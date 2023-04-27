@@ -1,0 +1,47 @@
+4 banks:
+    IPC: 0.660427 instructions: 30000003 cycles: 45425162
+    Branch Prediction Accuracy: 92.948% MPKI: 10.3974
+9 banks:
+    IPC: 0.66958 instructions: 30000003 cycles: 44804194
+    Branch Prediction Accuracy: 93.4568% MPKI: 9.6471
+12 banks:
+    IPC: 0.669014 instructions: 30000003 cycles: 44842136
+    Branch Prediction Accuracy: 93.4556% MPKI: 9.64893
+
+local history:
+    IPC: 0.664513 instructions: 30000003 cycles: 45145844
+    Branch Prediction Accuracy: 93.446% MPKI: 9.663
+
+ghsare and ltage:
+    IPC: 0.654658 instructions: 30000003 cycles: 45825482
+    Branch Prediction Accuracy: 92.7088% MPKI: 10.7499
+
+tages
+cadical-med-30K-109B.champsimtrace.xz
+    IPC: 0.6658 instructions: 30000003 cycles: 45058593
+    Branch Prediction Accuracy: 93.4492% MPKI: 9.65833
+cadical-med-30K-137B.champsimtrace.xz
+    IPC: 1.27122 instructions: 30000003 cycles: 23599316
+    Branch Prediction Accuracy: 97.4441% MPKI: 5.96867
+cadical-med-30K-267B.champsimtrace.xz
+    IPC: 0.451927 instructions: 30000001 cycles: 66382333
+    Branch Prediction Accuracy: 92.2146% MPKI: 11.5507
+cadical-med-30K-831B.champsimtrace.xz
+    IPC: 0.373014 instructions: 30000002 cycles: 80425901
+    Branch Prediction Accuracy: 91.644% MPKI: 12.5999
+cadical-med-30K-1246B.champsimtrace.xz
+    IPC: 0.348042 instructions: 30000000 cycles: 86196552
+    Branch Prediction Accuracy: 91.7547% MPKI: 12.4528
+cadical-med-30K-1463B.champsimtrace.xz
+    IPC: 0.350747 instructions: 30000000 cycles: 85531771
+    Branch Prediction Accuracy: 87.6979% MPKI: 18.5304
+
+
+void update(uint32_t cpu, uint8_t taken) {
+    if (taken == loop_pred[cpu] && loop_correct[cpu] < 127) 
+    {
+        loop_correct[cpu]++;
+    }
+    else if (loop_correct[cpu] > -126 && taken != loop_pred[cpu]) 
+        loop_correct[cpu]--;
+}

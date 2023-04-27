@@ -1,0 +1,38 @@
+#include <ooo_cpu.h>
+#include "TAGE.h"
+#include "loop.h"
+
+tage tage_p[NUM_CPUS];                      // tage predictor component for each cpu 
+LPred loop_p[NUM_CPUS];                  // loop predictor component for each cpu
+
+int l_correct[NUM_CPUS] = {0};                   // A counter to decide whose prediction to use
+uint8_t tage_pred[NUM_CPUS], loop_pred[NUM_CPUS];   // The predictions of tage and loop predictor
+
+// Updates the counter based on taken/not-taken
+void update (uint8_t taken, uint32_t cpu) {
+    if (taken == loop_pred[cpu] && l_correct[cpu] < 127) {
+        l_correct[cpu]++;
+    }
+    else if (l_correct[cpu] > -126 && taken != loop_pred[cpu] ) l_correct[cpu]--;
+}
+// Initialises the predictor
+void O3_CPU::initialize_branch_predictor() {
+    loop_p[cpu].init();
+}
+
+// Predicts whether branch is taken or not
+uint8_t O3_CPU::predict_branch(uint64_t ip) {
+    loop_pred[cpu] = loop_p[cpu].predict(ip);
+    tage_pred[cpu] = tage_p[cpu].tage_prediction(ip);
+    if ((loop_p[cpu].validity) && (l_correct[cpu] >= 0)) 
+        return loop_pred[cpu];
+    return tage_pred[cpu];
+}
+
+// Updates the predictor based on the last branch result
+void O3_CPU::last_branch_result(uint64_t ip, uint8_t taken) {
+    tage_p[cpu].update(ip, taken);
+    loop_p[cpu].update(tage_pred[cpu], taken);
+    if (loop_p[cpu].validity && (tage_pred[cpu] != loop_pred[cpu])) update(taken, cpu);
+}
+  
