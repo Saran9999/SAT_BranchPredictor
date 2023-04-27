@@ -23,14 +23,11 @@ $ ./build_champsim.sh bimodal no no no next_line lru 1
 $ ./build_champsim.sh ${BRANCH} ${L1I_PREFETCHER} ${L1D_PREFETCHER} ${L2C_PREFETCHER} ${LLC_PREFETCHER} ${LLC_REPLACEMENT} ${NUM_CORE}
 ```
 
-# Download DPC-3 trace
+# Download SAT Solver traces
 
-Professor Daniel Jimenez at Texas A&M University kindly provided traces for DPC-3. Use the following script to download these traces (~20GB size and max simpoint only).
-```
-$ cd scripts
-
-$ ./download_dpc3_traces.sh
-```
+Download it from <a href = 'https://www.dropbox.com/sh/xs2t9y4cuqlgrlp/AACpzGOj6BcSB-BUolGaBjbta?dl=0'>here</a>.
+Check traces within front-end folder<br>
+Place them in a folder names dpc3_traces inside the champsim<br>
 
 # Run simulation
 
